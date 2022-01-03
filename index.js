@@ -20,6 +20,15 @@ async function run() {
         const database = client.db('travail-app');
         const usersCollection = database.collection('users');
         const jobCollection = database.collection('jobs');
+
+        //Get: User by email
+        app.get('/users/:email', async (req, res) => {
+            const email = req.params.email;
+            const query = { email: email };
+            const user = await usersCollection.findOne(query);
+            res.send(user);
+        });
+
         // POST: save user to db
         app.post('/users', async (req, res) => {
             const user = req.body;
@@ -39,7 +48,7 @@ async function run() {
         });
 
         //POST: a new job
-        app.post('/addNewJob',async(req, res)=>{
+        app.post('/addNewJob', async (req, res) => {
             const newJob = req.body;
             console.log(newJob);
             const result = await jobCollection.insertOne(newJob);
