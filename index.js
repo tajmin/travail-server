@@ -56,6 +56,19 @@ async function run() {
             res.json(result)
         });
 
+        // GET: get all jobs
+        app.get('/availableJobs', async (req, res) => {
+            const result = await jobCollection.find({}).toArray();
+            res.json(result)
+        });
+
+        // GET: specific one,
+        app.get('/availableJobs/:id', async (req, res) => {
+            const id = req.params.id;
+            const result = await jobCollection.findOne({ _id: ObjectId(id) });
+            console.log(result)
+            res.json(result)
+        });
 
 
     }
