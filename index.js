@@ -87,6 +87,12 @@ async function run() {
             res.json(result)
         });
 
+        // POST: Apply for Job
+        app.post('/apply-job', async (req, res) => {
+            const data = req.body;
+            const result = await applicationCollection.insertOne(data);
+            res.json(result);
+        });
 
     }
     finally {
