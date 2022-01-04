@@ -70,6 +70,14 @@ async function run() {
             res.json(result)
         });
 
+        // GET : Jobs created by user
+        app.get('/created-jobs/:email', async (req, res) => {
+            const email = req.params.email;
+            const query = { createdBy: email };
+            const cursor = await jobCollection.find(query).toArray();
+            res.json(cursor)
+        });
+
 
     }
     finally {
