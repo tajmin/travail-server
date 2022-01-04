@@ -20,6 +20,7 @@ async function run() {
         const database = client.db('travail-app');
         const usersCollection = database.collection('users');
         const jobCollection = database.collection('jobs');
+        const applicationCollection = database.collection('applications');
 
         //Get: User by email
         app.get('/users/:email', async (req, res) => {
@@ -76,6 +77,14 @@ async function run() {
             const query = { createdBy: email };
             const cursor = await jobCollection.find(query).toArray();
             res.json(cursor)
+        });
+
+        // GET: search applied jobs with email
+        app.get('/applied-jobs/:email', async (req, res) => {
+            const email = req.params.email;
+            const query = { email: email };
+            const result = await applicationCollection.find(query).toArray();
+            res.json(result)
         });
 
 
