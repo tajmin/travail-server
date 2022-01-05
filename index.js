@@ -94,6 +94,19 @@ async function run() {
             res.json(result);
         });
 
+        //Get: admin role by email
+        app.get('/users/admin-role/:email', async (req, res) => {
+            const email = req.params.email;
+            const query = { email: email };
+            const user = await usersCollection.findOne(query);
+            let isAdmin = false;
+            if (user?.isAdmin) {
+                isAdmin = true;
+            }
+            const result = { admin: isAdmin }
+            res.send(result);
+        });
+
     }
     finally {
 
